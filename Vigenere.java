@@ -1,3 +1,4 @@
+
 import java.util.Vector;
 import java.util.Scanner;
 import java.util.HashMap;
@@ -6,13 +7,23 @@ public class Vigenere {
 
 	public static void main(String[] args) {
 
+		int state = 1;
+		int choice = 0;
+		Scanner in = new Scanner(System.in);
+		while (state == 1) {
+		
+			choice = display(state);
+			
+			if (choice == 1) {
+		
 		// Encryption
 
 		String input = "";
 		String inputKey = "";
-		Scanner in = new Scanner(System.in);
+		System.out.println();
 		System.out.println("Your Message(without spaces): ");
 		input = in.nextLine();
+		System.out.println();
 		System.out.println("Encryption Key(without spaces): ");
 		inputKey = in.nextLine();
 
@@ -21,7 +32,7 @@ public class Vigenere {
 		String someKey = inputKey.toLowerCase();
 
 		// Call encryption function for encrypted message
-		char[] cipher = new char[plainText.length()];
+		char []cipher = new char[plainText.length()];
 		cipher = encryption(plainText, someKey);
 		System.out.println();
 
@@ -33,22 +44,82 @@ public class Vigenere {
 
 		System.out.println();
 		System.out.println();
-
+			}
+			
+			
+			else if (choice == 2) {
 		// Decryption
 
+		System.out.println();
 		System.out.println("*****Decryption*****");
+		String text = "";
 		String unlockKey = "";
-		System.out.println("Key(without spaces): ");
+		System.out.println("Encrypted Message: ");
+		text = in.nextLine();
+		System.out.println();
+		System.out.println("Decryption Key(without spaces): ");
 		unlockKey = in.nextLine();
 
-		// Convert entered key into lowercase
+		// Convert entered ciphertext and key into lowercase
+		String cipherText = text.toLowerCase();
 		String unlock = unlockKey.toLowerCase();
 
 		// Call decryption function for decrypted message
-		decryption(cipher, unlock);
+		char []decipher = new char[cipherText.length()];
+		decipher = decryption(cipherText, unlock);
+		System.out.println();
+		
+		// The Decrypted message
+		System.out.println("Decrypted Message: ");
+			for (int v = 0; v < decipher.length; v++) {
+					System.out.print(decipher[v]);
+				}
 
+				System.out.println();
+				System.out.println();
+		}
+			
+			else if (choice == 3) {
+				in.close();
+				System.out.println("Goodbye");
+				break;
+			}
+			
+			else {
+				System.out.println();
+				System.out.println("Error >:( ");
+				System.out.println("| Please choose one of the following options. | ");
+				System.out.println("V                                             V ");
+				System.out.println();
+				
+			}
+			
+			
+		}
 	}
 
+	
+	public static int display(int state) {
+		
+		int choice = 3;
+		
+		if (state == 1) {
+		Scanner in = new Scanner(System.in);
+		System.out.println("***************************************************");
+		System.out.println("|      ***Welcome to the Vigenere Cipher!***      |");
+		System.out.println("|Please select from one of the following options: |");
+		System.out.println("|1. Encrypt                                       |");
+		System.out.println("|2. Decrypt                                       |");
+		System.out.println("|3. Exit                                          |");
+		System.out.println("***************************************************");
+	
+		System.out.print(  "Your choice: ");
+		choice = in.nextInt();
+		in.close();
+		}
+		
+		return choice;
+	}
 	
 	
 	public static char[] encryption(String plainText, String someKey) {
@@ -136,7 +207,7 @@ public class Vigenere {
 
 	
 	
-	public static void decryption(char[] cipherText, String someKey) {
+	public static char[] decryption(String cipherText, String someKey) {
 
 		// Hash map of the alphabet
 		String alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -171,7 +242,7 @@ public class Vigenere {
 				tally++;
 
 				// Check if ciphertext length reached
-				if (tally >= cipherText.length) {
+				if (tally >= cipherText.length()) {
 					isFull = 1;
 					break;
 				}
@@ -185,7 +256,7 @@ public class Vigenere {
 		int calc = 0;
 		char newLetter;
 		// Array to hold ciphertext
-		char[] decipherText = new char[cipherText.length];
+		char[] decipherText = new char[cipherText.length()];
 
 		// Hash Map for mapping values to keys, where each number maps to a letter
 		HashMap<Integer, Character> values = new HashMap<Integer, Character>();
@@ -194,10 +265,10 @@ public class Vigenere {
 		}
 
 		int temp = 0;
-		while (temp != cipherText.length) {
+		while (temp != cipherText.length()) {
 
 			// Get value of each letter in ciphertext and cipherKey
-			value1 = letters.get(cipherText[temp]);
+			value1 = letters.get(cipherText.charAt(temp));
 			value2 = letters.get(decipherKey.get(temp));
 
 			// Calculate and retrieve value for new letter
@@ -208,12 +279,10 @@ public class Vigenere {
 
 		}
 
-		// The Decrypted Message
-		System.out.println("Decrypted Message: ");
-		for (int v = 0; v < decipherText.length; v++) {
-			System.out.print(decipherText[v]);
-		}
-
+		
+		return decipherText;
 	}
 
 }
+
+ 
